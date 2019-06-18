@@ -1,0 +1,102 @@
+<resources>
+    <string name="app_name">BridgingApp</string>
+
+
+    <string name="action_set_location_method">Set location method</string>
+    <string name="title_select_location_method">Select location method</string>
+
+    <!-- Location method names shown on dialog. -->
+    <string-array name="locationMethodNames">
+        <item name="locationMethodGps">GPS</item>
+        <item name="locationMethodNetwork">Network</item>
+        <item name="locationMethodGpsNetwork">Gps and Network</item>
+        <item name="locationMethodGpsNetworkIndoor">GPS, Network and Indoor</item>
+        <item name="locationMethodIndoor">Indoor</item>
+    </string-array>
+
+    <!-- Location method enumeration names. -->
+    <string-array name="locationMethodValues">
+        <item name="locationMethodGps">GPS</item>
+        <item name="locationMethodNetwork">NETWORK</item>
+        <item name="locationMethodGpsNetwork">GPS_NETWORK</item>
+        <item name="locationMethodGpsNetworkIndoor">GPS_NETWORK_INDOOR</item>
+        <item name="locationMethodIndoor">INDOOR</item>
+    </string-array>
+
+    <string name="action_set_indoor_mode">Set indoor mode</string>
+    <string name="title_select_indoor_mode">Select indoor mode</string>
+
+    <!-- Indoor positioning mode names shown on dialog. -->
+    <string-array name="indoorPositioningModeNames">
+        <item name="indoorPositioningModeAutomatic">Automatic</item>
+        <item name="indoorPositioningModeCommunity">Community</item>
+        <item name="indoorPositioningModePrivate">Private</item>
+        <item name="indoorPositioningModeDraft">Draft</item>
+    </string-array>
+
+    <!-- Indoor positioning mode enumeration names. -->
+    <string-array name="indoorPositioningModeValues">
+        <item name="indoorPositioningModeAutomatic">AUTOMATIC</item>
+        <item name="indoorPositioningModeCommunity">COMMUNITY</item>
+        <item name="indoorPositioningModePrivate">PRIVATE</item>
+        <item name="indoorPositioningModeDraft">DRAFT</item>
+    </string-array>
+
+    <string name="start_navi">Start Navigation</string>
+    <string name="stop_navi">Stop Navigation</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="hotel_1">"HOTEL NAVARATANA \n\n 2.8 Km from you \n\n Click to Accept the request"</string>
+    <string name="hotel_2">"HOTEL RAJRASOI \n\n 3.4 Km from you \n\n Click to accept the request"</string>
+    <string name="hotel_3">"HOTEL SUKHSAGAR \n\n 4.0 Km from you \n\n Click to accept the request"</string>
+    <string name="hotel_4">"PIZZA HUT  \n\n 4.8 Km from you \n\n Click to accept the request"</string>
+
+    <string name="quickstart_message">Click the SUBSCRIBE TO NEWS button below to subscribe to the
+        news topic. Messages sent to the news topic will be received. The LOG TOKEN button logs the
+        InstanceID token to logcat.</string>
+    <string name="subscribe_to_news">Subscribe To News</string>
+    <string name="log_token">Log Token</string>
+
+    <string name="msg_subscribed">Subscribed to receiver topic</string>
+    <string name="msg_subscribed1">Subscribed to donars topic</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="default_notification_channel_name" translatable="true">News</string>
+
+
+    <string name="preview_description">Image and Video preview will appear here</string>
+    <string name="btn_take_picture">Take Picture</string>
+    <string name="btn_record_video">Record Video</string>
+
+
+    <string name="text_accounts">All Accounts</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="text_login">Login</string>
+    <string name="text_register">Register</string>
+    <string name="error_message_name">Enter Full Name</string>
+    <string name="error_message_email">Enter Valid Email</string>
+    <string name="error_message_age">Enter Age</string>
+    <string name="error_message_password">Enter Password</string>
+    <string name="success_message">Registration Successful</string>
+    <string name="text_not_member">No account yet? Create one</string>
+    <string name="text_already_member">Already a member? Login</string>
+    <string name="error_email_exists">Email Already Exists</string>
+    <string name="error_password_match">Password Does Not Matches</string>
+    <string name="error_valid_email_password">Wrong Email or Password</string>
+    <string name="text_hello">Hello,</string>
+    <string name="about_text1">I am love in with you dudes! Lets have fun on flights!\nI am love in with you dudes!</string>
+
+    <string name="logout_text">Are you sure you want to Exit?</string>
+</resources>
