@@ -64,6 +64,15 @@ public class BridgeModule extends ReactContextBaseJavaModule {
         context.startActivity(intent);
     }
 
+    @ReactMethod
+    void navigateToPolice() {
+        ReactApplicationContext context = getReactApplicationContext();
+        Intent intent = new Intent(context, MapActivityForPolice.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+
     private void sendCallback(Integer messageId, String message){
         if (callback != null) {
             callback.invoke(messageId, message);

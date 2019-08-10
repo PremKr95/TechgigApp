@@ -84,21 +84,25 @@ repositories {
 }
 
 dependencies {
+    implementation project(':react-native-image-picker')
+    implementation project(':react-native-maps')
     implementation project(':react-native-firebase')
 
 
     implementation 'com.google.firebase:firebase-inappmessaging-display:17.2.0'
-    implementation ("com.google.firebase:firebase-core:16.0.1") {
+    implementation("com.google.firebase:firebase-core:16.0.1") {
         transitive = true
     }
     implementation 'com.google.firebase:firebase-config:17.0.0'
     implementation "com.google.firebase:firebase-messaging:${rootProject.ext.firebaseVersion}"
-    implementation ('com.google.firebase:firebase-crash:16.2.1'){
+    implementation('com.google.firebase:firebase-crash:16.2.1') {
         transitive = true
     }
     implementation "com.google.firebase:firebase-database:17.0.0"
 
-
+    implementation('com.squareup.retrofit2:retrofit:2.1.0') {
+        exclude module: 'okhttp'
+    }
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-gesture-handler')
     implementation project(':lottie-react-native')

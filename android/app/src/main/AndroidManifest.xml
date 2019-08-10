@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bridgingapp">
+    package="com.bridgingapp"
+    android:installLocation="auto">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_SMS"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-
-
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:name=".MainApplication"
@@ -40,10 +39,10 @@
         <meta-data
             android:name="com.here.android.maps.license.key"
             android:value="IOIrcAopPeSWmLRf7dhJ/9Fn2tHCBHwn39yK3BjPByqEs4x3qR8ts507hYB6ALsTXTcQBczkEgRs/Um4AU3PgMnz60P7ySD2gNktXTzjMl4bNIyHb7XWfXIG8oc+1o0yYf5bYSCF0Z4+N+hL+/SdorzAIaUGmxrzrxWxYFFuyCuI7y4kwTYdW8um4L79M+UEmducpE/bsYbimAsIrQk3g/N089zV5wV8QcIT/3iqt7ivJHJNRSU1egFz8rSwndPTZX/sAauapcIBV8xMmBYd0N+0E+XfQ1p9/laMz8Jv1L8XF17h13GF8dKsOujv1jp7gsbxAXQhtw6o15XYN8ZaJwRzmCFS37LBCcpCFCX4V7ADeh2t5I3t+MyU4m9fxMw2Gu/MO6YPcPD1AJgyoQbpbC/F8RlnNXnm9EOD/Jq9S2X+0zYtxtWmXMlsHr6Z8czNoYvdv2FK2JqNOC9lH20gj7k72ayuHodgGbFw+Lz4MFoH5fkXNG6x49JZA7S/+JDTMySAQQuWb93aWjsqAKjKovwYO6zJC9kNsZQB6zN8EK9T5G86FQQyCooRlDDFG7JemgToUo5Q0OqGs0VUuHV8b55lcZkGS3xJ9JXXfHYPMRGykgEC9eYF6sOwk0VHTdlzravA1QaEphZg43bQdGhuOMQaxBC1rLOm00hnDKMJINY=" />
-
         <meta-data
             android:name="INTENT_NAME"
             android:value="PREM" />
+
         <service
             android:name="com.here.android.mpa.service.MapService"
             android:exported="false"
@@ -55,7 +54,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.provider"
+            android:authorities="com.bridgingapp.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -66,7 +65,8 @@
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
         <activity android:name=".MapActivity" />
         <activity android:name=".prem.MapActivityCheck" />
-        <activity android:name=".MapActivitySimulation"></activity>
+        <activity android:name=".MapActivitySimulation" />
+        <activity android:name=".MapActivityForPolice"></activity>
     </application>
 
 </manifest>

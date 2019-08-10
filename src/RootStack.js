@@ -14,6 +14,9 @@ import UserHome from '../src/component/User/UserHome'
 import LodgeAComplaintStepOne from '../src/component/User/LodgeAComplaintStepOne'
 import CreateComplaint from '../src/component/User/CreateComplaint'
 import SubmitAlert from '../src/component/User/SubmitAlert'
+import SelectComplainType from '../src/component/User/SelectComplainType'
+import InfoPage from '../src/component/User/InfoPage';
+import FirePolice from '../src/firepolice/FirePolice';
 
 
 var height=800
@@ -44,6 +47,13 @@ const RootStack = createStackNavigator(
     PoliceStationHome: {
       screen: PoliceStationHome,
     },
+    PoliceStationHome: {
+      screen: PoliceStationHome,
+    },
+    FirePolice: {
+      screen: FirePolice,
+    },
+
   },
   {
     initialRouteName: 'App',
@@ -51,27 +61,37 @@ const RootStack = createStackNavigator(
 );
 
 
-// const RootStack = createStackNavigator(
-//   {
-//     UserHome: {
-//       screen: UserHome,
-//     },
+const RootStacks = createStackNavigator(
+  {
+    App: {
+      screen: App,
+    },
 
-//     LodgeAComplaintStepOne: {
-//         screen: LodgeAComplaintStepOne,
-//       },
+    UserHome: {
+      screen: UserHome,
+    },
 
-//     CreateComplaint: {
-//         screen: CreateComplaint,
-//       },
-//       SubmitAlert: {
-//         screen: SubmitAlert,
-//       },
-//   },
-//   {
-//     initialRouteName: 'UserHome',
-//   }
-// );
+    LodgeAComplaintStepOne: {
+        screen: LodgeAComplaintStepOne,
+      },
+
+    CreateComplaint: {
+        screen: CreateComplaint,
+      },
+      SubmitAlert: {
+        screen: SubmitAlert,
+      },
+      SelectComplainType: {
+        screen: SelectComplainType,
+      },
+      InfoPage: {
+        screen: InfoPage,
+      },
+  },
+  {
+    initialRouteName: 'App',
+  }
+);
 
 
 
@@ -91,4 +111,5 @@ const RootStack = createStackNavigator(
 //   }
 // );
 
+// export default createAppContainer(RootStacks);
 export default createAppContainer(RootStack);

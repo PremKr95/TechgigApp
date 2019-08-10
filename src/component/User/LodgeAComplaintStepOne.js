@@ -49,7 +49,10 @@ export default class UserHome extends Component {
                         <View style={{ flex: 1, marginBottom: 60 }}>
                             <View style={{ height: '50%', width: '100%', flexDirection: 'row' }}>
                                 <View style={{ padding: 16, paddingLeft: 0, paddingRight: 8, width: '50%', height: '100%' }}>
-                                    <TouchableOpacity onPress={()=>this.setState({active:1})} style={{ height: '100%', width: '100%', backgroundColor:active===1?'#adcdff' :'white', borderRadius: 8 }}>
+                                    <TouchableOpacity onPress={()=>{
+                                        this.setState({active:1})
+                                        global.caseType = 1
+                                        }} style={{ height: '100%', width: '100%', backgroundColor:active===1?'#adcdff' :'white', borderRadius: 8 }}>
                                         <View style={{ alignSelf: 'center', justifyContent: 'center', marginTop: 40, backgroundColor: '#f3f4f4', height: 100, width: 100, borderRadius: 50 }}>
                                             <Image resizeMode={'contain'} style={{ alignSelf: 'center', height: 60, width: 60 }} source={require('../../res/knife.png')} />
                                         </View>
@@ -59,9 +62,12 @@ export default class UserHome extends Component {
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ padding: 16, paddingRight: 0, paddingLeft: 8, width: '50%', height: '100%' }}>
-                                    <TouchableOpacity  onPress={()=>this.setState({active:2})}  style={{ height: '100%', width: '100%', backgroundColor:active===2?'#adcdff' : 'white', borderRadius: 8 }}>
+                                    <TouchableOpacity  onPress={()=>{
+                                        global.caseType = 2
+                                        this.setState({active:2})
+                                        }}  style={{ height: '100%', width: '100%', backgroundColor:active===2?'#adcdff' : 'white', borderRadius: 8 }}>
                                         <View style={{ alignSelf: 'center', justifyContent: 'center', marginTop: 40, backgroundColor: '#f3f4f4', height: 100, width: 100, borderRadius: 50 }}>
-                                            <Image resizeMode={'contain'} style={{ alignSelf: 'center', height: 60, width: 60 }} source={require('../../res/knife.png')} />
+                                            <Image resizeMode={'contain'} style={{ alignSelf: 'center', height: 60, width: 60 }} source={require('../../res/alarm.png')} />
                                         </View>
                                         <Text style={{ position: 'absolute', bottom: 20, alignSelf: 'center', fontSize: 20, color: '#2a2a2a' }}>
                                             Rape
@@ -72,9 +78,12 @@ export default class UserHome extends Component {
 
                             <View style={{ height: '50%', width: '100%', flexDirection: 'row' }}>
                                 <View style={{ padding: 16, paddingLeft: 0, paddingRight: 8, width: '50%', height: '100%' }}>
-                                    <TouchableOpacity onPress={()=>this.setState({active:3})}  style={{ height: '100%', width: '100%', backgroundColor:active===3?'#adcdff' : 'white', borderRadius: 8 }}>
+                                    <TouchableOpacity onPress={()=>{
+                                        global.caseType = 3
+                                        this.setState({active:3})
+                                        }}  style={{ height: '100%', width: '100%', backgroundColor:active===3?'#adcdff' : 'white', borderRadius: 8 }}>
                                         <View style={{ alignSelf: 'center', justifyContent: 'center', marginTop: 40, backgroundColor: '#f3f4f4', height: 100, width: 100, borderRadius: 50 }}>
-                                            <Image resizeMode={'contain'} style={{ alignSelf: 'center', height: 60, width: 60 }} source={require('../../res/knife.png')} />
+                                            <Image resizeMode={'contain'} style={{ alignSelf: 'center', height: 60, width: 60 }} source={require('../../res/detective.png')} />
                                         </View>
                                         <Text style={{ position: 'absolute', bottom: 20, alignSelf: 'center', fontSize: 20, color: '#2a2a2a' }}>
                                             Theft
@@ -83,9 +92,12 @@ export default class UserHome extends Component {
                                 </View>
 
                                 <View style={{ padding: 16, paddingRight: 0, paddingLeft: 8, width: '50%', height: '100%' }}>
-                                    <TouchableOpacity onPress={()=>this.setState({active:4})}  style={{ height: '100%', width: '100%', backgroundColor:active===4?'#adcdff' : 'white', borderRadius: 8 }}>
+                                    <TouchableOpacity onPress={()=>{
+                                        global.caseType = 4
+                                        this.setState({active:4})}}
+                                          style={{ height: '100%', width: '100%', backgroundColor:active===4?'#adcdff' : 'white', borderRadius: 8 }}>
                                         <View style={{ alignSelf: 'center', justifyContent: 'center', marginTop: 40, backgroundColor: '#f3f4f4', height: 100, width: 100, borderRadius: 50 }}>
-                                            <Image resizeMode={'contain'} style={{ alignSelf: 'center', height: 60, width: 60 }} source={require('../../res/knife.png')} />
+                                            <Image resizeMode={'contain'} style={{ alignSelf: 'center', height: 60, width: 60 }} source={require('../../res/lock.png')} />
                                         </View>
                                         <Text style={{ position: 'absolute', bottom: 20, alignSelf: 'center', fontSize: 20, color: '#2a2a2a' }}>
                                             Others

@@ -1,14 +1,16 @@
 import React, { Component } from "react"
-import {WebView, Share,Dimensions,Linking,Platform, View, Text, FlatList, TouchableOpacity,StyleSheet } from "react-native"
+import { WebView,PermissionsAndroid, Share, Dimensions, Linking, Platform, View, Text, FlatList, TouchableOpacity, StyleSheet } from "react-native"
 // import { Loader } from "../../components/app/Loader"
 import ScreenHeader from "../ScreenHeader"
-import { Container,Content, Card, Button ,Icon} from "native-base"
+import { Container, Content, Card, Button, Icon } from "native-base"
 const _width = Dimensions.get('window').width
-// import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import Permission from './Permission'
 import BridgeModule from '../../../Bridging'
+import {Loader} from '../Loader'
+
 var dummyArray = ['1', '2', '3', '4', '5', '1', '2', '3', '4', '5']
-var numberArray= ['+917021278218','+917277381012']
+var numberArray = ['+917021278218', '+917277381012']
 var dummyNews = {
     "status": "ok",
     "totalResults": 70,
@@ -281,114 +283,130 @@ export default class UserHome extends Component {
         super(props)
         this.state = {
             dangerMessage: "I am in Danger. Kindly reach me at this location",
-            isFetching:false,
+            isFetching: false,
             permissionAccept: false,
-    
+            loading : true
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.fetchLatestNews()
         this.askLocationPermission()
     }
 
-    sendSMS(phoneNumber){ 
-            for(i=0;i<numberArray.length;i++){
-                var msg = "Hey..I am in danger. Need Help immediately Please track me on : "+this.state.marker.latitude +"," +this.state.marker.longitude
-                BridgeModule.send(123, numberArray[i], "Hey.." +msg , (msg)=>{ alert(msg) });
-            }       
+    sendSMS(phoneNumber) {
+        PermissionsAndroid.requestMultiple(
+            [
+                PermissionsAndroid.PERMISSIONS.SEND_SMS,
+            ], {
+                title: 'Permission',
+                message: 'We need your permission.',
+            },
+        )
+            .then((permRes) => {
+
+                if (permRes['android.permission.SEND_SMS'] === PermissionsAndroid.RESULTS.GRANTED) {
+                    console.log('permRes', permRes)
+
+        for (i = 0; i < numberArray.length; i++) {
+            var msg = "Hey..I am in danger. Need Help immediately Please track me on : " + this.state.marker.latitude + "," + this.state.marker.longitude
+            BridgeModule.send(123, numberArray[i], "Hey.." + msg, (msg) => { alert("Help is on your way") });
+        }
+    }})
     }
-    
+
     askLocationPermission() {
         console.log("fetchCurrentLocation1")
 
         if (Platform.OS === "ios") {
-          this.setState({
-            permissionAccept: true
-          });
-          this.fetchCurrentLocation();
+            this.setState({
+                permissionAccept: true
+            });
+            this.fetchCurrentLocation();
         } else {
             console.log("fetchCurrentLocation2")
 
-          Permission.checkLocationPermission(
-            Permission => {
-                console.log("fetchCurrentLocation3")
-              this.setState({
-                permissionAccept: true
-              });
-              this.fetchCurrentLocation();
-            },
-            deniedPermission => {
-                console.log("fetchCurrentLocation4")
-            }
-          );
+            Permission.checkLocationPermission(
+                Permission => {
+                    console.log("fetchCurrentLocation3")
+                    this.setState({
+                        permissionAccept: true
+                    });
+                    this.fetchCurrentLocation();
+                },
+                deniedPermission => {
+                    console.log("fetchCurrentLocation4")
+                }
+            );
         }
-      }
+    }
 
     fetchCurrentLocation() {
-        console.log("fetchCurrentLocation5",this.state.permissionAccept)
+        console.log("fetchCurrentLocation5", this.state.permissionAccept)
         navigator.geolocation.getCurrentPosition(
-          position => {
-            console.log(" Lat",position.coords.latitude)
-            console.log(" Long",position.coords.longitude)
-            this.setState({
-              marker: {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-              },
-            });
-            console.log(" Marker lat",this.state.marker.latitude)
-            console.log(" Marker lat",this.state.marker.longitude)
-    
-          },
-          error => {
-            console.log(" Marker lat")
-          },
-          { enableHighAccuracy: false, timeout: 200000 }
-        );
-      }
+            position => {
+                console.log(" Lat", position.coords.latitude)
+                console.log(" Long", position.coords.longitude)
+                this.setState({
+                    marker: {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                    },
+                },()=>{
+                    global.currentPosition = this.state.marker
+                });
+                console.log(" Marker lat", this.state.marker.latitude)
+                console.log(" Marker lat", this.state.marker.longitude)
 
-    fetchLatestNews(){
+            },
+            error => {
+                console.log(" Marker lat")
+            },
+            { enableHighAccuracy: false, timeout: 200000 }
+        );
+    }
+
+    fetchLatestNews() {
         let url = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=6682d7ea404441f8983268ad1eefc24d"
-        fetch(url).then(response=>response.json()).then(responseJson=>{
-            if(responseJson.status==="ok" && responseJson.totalResults.length>0)
-                this.setState({latestNews:responseJson.articles})
+        fetch(url).then(response => response.json()).then(responseJson => {
+            if (responseJson.status === "ok" && responseJson.totalResults.length > 0)
+                this.setState({ latestNews: responseJson.articles , loading:false })
             else
-                this.setState({latestNews:dummyNews.articles})
-        }).catch(error=>{
-            this.setState({latestNews:dummyNews.articles})
+                this.setState({ latestNews: dummyNews.articles , loading:false})
+        }).catch(error => {
+            this.setState({ latestNews: dummyNews.articles , loading:false})
         })
     }
 
-    sharecard(item){
+    sharecard(item) {
         Share.share({
             message: item.url,
             url: item.url,
             title: 'Wow, did you see that?'
-          }, {
-            // Android only:
-            dialogTitle: 'Share BAM goodness',
-          })
+        }, {
+                // Android only:
+                dialogTitle: 'Share BAM goodness',
+            })
     }
 
     static navigationOptions = {
         header: null
     }
 
-    onRefresh(){
+    onRefresh() {
         // this.setState({isFetching})
     }
 
     _renderNewFeed(item) {
         return (
             <TouchableOpacity
-                style={{ width: _width-40,alignSelf: "center" }}
+                style={{ width: _width - 40, alignSelf: "center" }}
             >
-                <View style={{ width: _width-40 }}>
+                <View style={{ width: _width - 40 }}>
                     <Card style={styles.card}>
                         <View style={styles.lineNcontentView}>
-                            <View 
-                                style={[styles.leftLine, { 
+                            <View
+                                style={[styles.leftLine, {
                                     // backgroundColor: data.tagsColor 
                                 }]}
                             />
@@ -397,13 +415,13 @@ export default class UserHome extends Component {
                                     numberOfLines={2}
                                     style={[styles.heading, {
                                         //  color: data.tagsColor 
-                                        }]}
+                                    }]}
                                 >
                                     {item.item.title}
-                        </Text>
+                                </Text>
                                 <Text numberOfLines={3} style={styles.details}>
                                     {item.item.description}
-                        </Text>
+                                </Text>
                                 <View style={styles.lineHorizontal} />
                                 <View style={styles.viewBottom}>
                                     {/* <Image
@@ -412,7 +430,7 @@ export default class UserHome extends Component {
                                         style={styles.image}
                                     /> */}
                                     <View style={styles.bottomView}>
-                                    <View style={{height:20,width:20,borderRadius:4,backgroundColor:'red'}}/>
+                                        <View style={{ height: 20, width: 20, borderRadius: 4, backgroundColor: 'red' }} />
                                         <Text numberOfLines={1} style={styles.bottomTexts}>
                                             {item.item.source.name}
                                         </Text>
@@ -428,40 +446,52 @@ export default class UserHome extends Component {
                         </View>
                     </Card>
                     {/* {data.isLiked ? ( */}
-                        <Button 
-                            onPress={()=>this.sharecard(item.item)}
-                            style={styles.likedView}>
-                            <Icon name="share" style={styles.likeIcon} />
-                        </Button>
+                    <Button
+                        onPress={() => this.sharecard(item.item)}
+                        style={styles.likedView}>
+                        <Icon name="share" style={styles.likeIcon} />
+                    </Button>
                     {/* ) : null} */}
                 </View>
             </TouchableOpacity>
         );
     }
 
+    _renderFooter() {
+        return (
+            <View style={{ height: 140, width: '100%' }} />
+        )
+    }
+
     render() {
-        const {latestNews}= this.state
+        const { latestNews } = this.state
         return (
             <Container>
                 <ScreenHeader
+                    {...this.props}
                     headerColor="#FFFFFF"
                     androidStatusBarColor="#FFFFFF"
                     title={'News Feed'}
                     subTitle=""
+                    left= {90}
                     onLeftIconPress={() => this.props.navigation.goBack()}
-                    isRightIconText={false}
-                // rightIconName={'Notification'}
+                    enableRightIcon={true}
+                    enableLeftIcon={false}
+
                 />
 
                 <Content contentContainerStyle={{ flex: 1 }}>
-                    
+
+                    <Loader message={'Getting News'} loading={this.state.loading}/>
+
                     <FlatList
                         extraData={this.state}
                         data={latestNews}
-                        renderItem={item=>this._renderNewFeed(item)}
-                        keyExtractor = {(item, index) => index.toString()}
+                        renderItem={item => this._renderNewFeed(item)}
+                        keyExtractor={(item, index) => index.toString()}
+                        ListFooterComponent={()=>this._renderFooter()}
                         // onRefresh={() => this.onRefresh()}
-                        // refreshing={this.state.isFetching}
+                    // refreshing={this.state.isFetching}
                     />
                     <View
                         style={{
@@ -469,23 +499,23 @@ export default class UserHome extends Component {
                             flexDirection: "row",
                             position: 'absolute',
                             bottom: 0,
-                            right:10,
+                            right: 10,
                             marginBottom: 60,
                             marginRight: 0,
-                            alignContent:'center'
+                            alignContent: 'center'
                         }}
                     >
 
-                    <TouchableOpacity onLongPress={()=>this.sendSMS()} style={{flexDirection:'row'}}>
-                        <View
-                            style={{marginRight:-25, height: 50, borderRadius: 25, width: 240, backgroundColor: 'red', alignSelf:'center',alignItems:'center',justifyContent:'center'}}>
-                            <Text style={{textAlign:'center', color: '#ffffff', minWidth: '20%', fontSize: 14, }}>Long Press to activate </Text>
-                        </View>
-                        <View
-                            style={{  height: 80, borderRadius: 40, width: 80, backgroundColor: 'red', justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{textAlign:'center', color: '#ffffff', minWidth: '20%', fontSize: 16, }}>SOS</Text>
-                        </View>
-                    </TouchableOpacity>
+                        <TouchableOpacity onLongPress={() => this.sendSMS()} style={{ flexDirection: 'row' }}>
+                            <View
+                                style={{ marginRight: -25, height: 50, borderRadius: 25, width: 240, backgroundColor: 'red', alignSelf: 'center', alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ textAlign: 'center', color: '#ffffff', minWidth: '20%', fontSize: 14, }}>Long Press to activate </Text>
+                            </View>
+                            <View
+                                style={{ height: 80, borderRadius: 40, width: 80, backgroundColor: 'red', justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ textAlign: 'center', color: '#ffffff', minWidth: '20%', fontSize: 16, }}>SOS</Text>
+                            </View>
+                        </TouchableOpacity>
 
                     </View>
 
@@ -508,7 +538,7 @@ export default class UserHome extends Component {
 
                         <Button
                             block
-                            onPress={()=>this.props.navigation.navigate('LodgeAComplaintStepOne')}
+                            onPress={() => this.props.navigation.navigate('SelectComplainType')}
                             style={{ height: '100%', width: '100%', backgroundColor: '#2f4efa', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ color: '#ffffff', minWidth: '20%', fontSize: 16, }}>Lodge A Complain</Text>
                         </Button>
@@ -522,105 +552,105 @@ export default class UserHome extends Component {
 
 const styles = StyleSheet.create({
     headingText: {
-      fontFamily: "Roboto_medium",
-      fontSize: 16,
-      color: "#212121"
+        fontFamily: "Roboto_medium",
+        fontSize: 16,
+        color: "#212121"
     },
     headingView: {
-      flexDirection: "row",
-      justifyContent: "flex-start",
-      paddingLeft:15,
-      padding:3
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        paddingLeft: 15,
+        padding: 3
     },
-    cardOuterView: { width: "100%",marginTop:10 },
+    cardOuterView: { width: "100%", marginTop: 10 },
     image: { width: 20, height: 20 },
     viewBottom: {
-      flexDirection: "row",
-      justifyContent: "flex-start",
-      alignItems: "center"
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center"
     },
     lineHorizontal: {
-      width: "85%",
-      backgroundColor: "#f3f3f3",
-      height: 1,
-      alignSelf: "center",
-      marginLeft: 0
+        width: "85%",
+        backgroundColor: "#f3f3f3",
+        height: 1,
+        alignSelf: "center",
+        marginLeft: 0
     },
     bottomView: {
-      flexDirection: "row",
-      justifyContent: "flex-start",
-      alignItems: "center",
-      marginStart: 5
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        marginStart: 5
     },
     dot: {
-      width: 4,
-      height: 4,
-      borderRadius: 2,
-      alignSelf: "center",
-      backgroundColor: "#4A4A4A",
-      margin: 5
+        width: 4,
+        height: 4,
+        borderRadius: 2,
+        alignSelf: "center",
+        backgroundColor: "#4A4A4A",
+        margin: 5
     },
-  
-    bottomTexts: { fontSize: 11, color: "#4A4A4A",marginLeft:4 },
-  
+
+    bottomTexts: { fontSize: 11, color: "#4A4A4A", marginLeft: 4 },
+
     details: {
-      color: "#202020",
-      fontSize: 13, 
-      textAlign: "justify"
+        color: "#202020",
+        fontSize: 13,
+        textAlign: "justify"
     },
     heading: { fontWeight: "700", color: "#dbb003" },
-  
+
     lineNcontentView: {
-      flexDirection: "row",
-      justifyContent: "flex-start",
-      alignItems: "center",
-      width: "90%"
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        width: "90%"
     },
     likeIcon: {
-      fontSize: 17,
-      color: "white",
-      paddingLeft: 15,
-      paddingRight: 15,
-      padding: 6
+        fontSize: 17,
+        color: "white",
+        paddingLeft: 15,
+        paddingRight: 15,
+        padding: 6
     },
     likeText: { fontSize: 16, color: "white" },
     contentView: {
-      flexDirection: "column",
-      justifyContent: "space-around",
-      height: 150,
-      padding: 10
+        flexDirection: "column",
+        justifyContent: "space-around",
+        height: 150,
+        padding: 10
     },
     leftLine: {
-      width: 3,
-      backgroundColor: "green",
-      height: "70%",
-      borderRadius: 8
+        width: 3,
+        backgroundColor: "green",
+        height: "70%",
+        borderRadius: 8
     },
     container: {
-      height: 200,
-      padding: 0,
-      justifyContent: "center",
-      backgroundColor: "#f7f7f7"
+        height: 200,
+        padding: 0,
+        justifyContent: "center",
+        backgroundColor: "#f7f7f7"
     },
     card: {
-      borderRadius: 4,
-      elevation: 2,
-      height: 150,
-      backgroundColor: "white"
+        borderRadius: 4,
+        elevation: 2,
+        height: 150,
+        backgroundColor: "white"
     },
     likedView: {
-      height: 28,
-      position: "absolute",
-      backgroundColor: "#ffbd1a",
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-evenly",
-      borderRadius: 14,
-      right: -5,
-      top: 5,
-      borderBottomRightRadius: 2,
-      borderTopRightRadius: 2
+        height: 28,
+        position: "absolute",
+        backgroundColor: "#ffbd1a",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-evenly",
+        borderRadius: 14,
+        right: -5,
+        top: 5,
+        borderBottomRightRadius: 2,
+        borderTopRightRadius: 2
     }
-  });
+});
 
 

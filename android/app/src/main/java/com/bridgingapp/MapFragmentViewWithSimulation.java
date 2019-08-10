@@ -1,18 +1,28 @@
 package com.bridgingapp;
 
-import java.io.File;
-import java.io.File;
-import java.lang.ref.WeakReference;
-import java.util.List;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.here.android.mpa.common.GeoBoundingBox;
 import com.here.android.mpa.common.GeoCoordinate;
 import com.here.android.mpa.common.GeoPosition;
+import com.here.android.mpa.common.Image;
 import com.here.android.mpa.common.OnEngineInitListener;
 import com.here.android.mpa.guidance.NavigationManager;
 import com.here.android.mpa.mapping.Map;
-import com.here.android.mpa.mapping.SupportMapFragment;
+import com.here.android.mpa.mapping.MapMarker;
 import com.here.android.mpa.mapping.MapRoute;
+import com.here.android.mpa.mapping.SupportMapFragment;
 import com.here.android.mpa.routing.CoreRouter;
 import com.here.android.mpa.routing.Route;
 import com.here.android.mpa.routing.RouteOptions;
@@ -22,18 +32,10 @@ import com.here.android.mpa.routing.RouteWaypoint;
 import com.here.android.mpa.routing.Router;
 import com.here.android.mpa.routing.RoutingError;
 
-import android.support.v7.app.AppCompatActivity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import java.io.File;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.util.List;
 
 /**
  * This class encapsulates the properties and functionality of the Map view.It also triggers a
@@ -50,6 +52,11 @@ public class MapFragmentViewWithSimulation {
     private GeoBoundingBox m_geoBoundingBox;
     private Route m_route;
     private boolean m_foregroundServiceStarted;
+    MapMarker mapMarkerOrigin , mapMarkerDestination;
+    Image imageRed,imageBlue;
+
+
+//    LocationManager locationManager;
 
     public MapFragmentViewWithSimulation(AppCompatActivity activity) {
         m_activity = activity;
@@ -62,6 +69,11 @@ public class MapFragmentViewWithSimulation {
     }
 
     private void initMapFragment() {
+
+//        locationManager = (LocationManager) m_activity.getSystemService(Context.LOCATION_SERVICE);
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, (LocationListener) this);
+
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,5 , th);
         /* Locate the mapFragment UI element */
         m_mapFragment = getMapFragment();
 
@@ -95,11 +107,32 @@ public class MapFragmentViewWithSimulation {
 
                         if (error == Error.NONE) {
                             m_map = m_mapFragment.getMap();
-                            m_map.setCenter(new GeoCoordinate(49.259149, -123.008555),
+                            m_map.setCenter(new GeoCoordinate(19.124376, 73.008951),
                                     Map.Animation.NONE);
                             //Put this call in Map.onTransformListener if the animation(Linear/Bow)
                             //is used in setCenter()
-                            m_map.setZoomLevel(13.2);
+                            m_map.setZoomLevel(11);
+                            Image imageGreens = new Image();
+                            Image imageReds = new Image();
+                            try {
+                                imageGreens.setImageResource(R.drawable.marker_green);
+                                imageReds.setImageResource(R.drawable.marker_red);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                imageReds.setImageResource(R.drawable.marker_red);
+                                imageGreens.setImageResource(R.drawable.marker_green);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            mapMarkerOrigin = new MapMarker(new GeoCoordinate(19.124376, 73.008951),imageGreens);
+                            m_map.addMapObject(mapMarkerOrigin);
+
+                            mapMarkerDestination = new MapMarker(new GeoCoordinate(19.1414263,73.037584),imageReds);
+                            m_map.addMapObject(mapMarkerDestination);
+
                             /*
                              * Get the NavigationManager instance.It is responsible for providing voice
                              * and visual instructions while driving and walking
@@ -142,9 +175,9 @@ public class MapFragmentViewWithSimulation {
 
         /* Define waypoints for the route */
         /* START: 4350 Still Creek Dr */
-        RouteWaypoint startPoint = new RouteWaypoint(new GeoCoordinate(49.259149, -123.008555));
+        RouteWaypoint startPoint = new RouteWaypoint(new GeoCoordinate(19.124376, 73.008951));
         /* END: Langley BC */
-        RouteWaypoint destination = new RouteWaypoint(new GeoCoordinate(49.073640, -122.559549));
+        RouteWaypoint destination = new RouteWaypoint(new GeoCoordinate(19.1414263,73.037584));
 
         /* Add both waypoints to the route plan */
         routePlan.addWaypoint(startPoint);

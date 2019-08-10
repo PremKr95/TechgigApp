@@ -21,12 +21,15 @@ public class CustomMapViewManager extends SimpleViewManager<TextView> {
         return "RCTNativeView";
     }
 
+
     @Override
     protected TextView createViewInstance(ThemedReactContext reactContext) {
         TextView videoView = new TextView(reactContext);
         return videoView;
 
     }
+
+
     @ReactProp(name="url")
     public void setVideoPath(TextView textView, String urlPath) {
         Uri uri = Uri.parse(urlPath);

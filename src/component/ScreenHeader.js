@@ -35,7 +35,7 @@ export default class ScreenHeader extends Component {
     title: "title",
     subTitle: "",
     enableLeftIcon: true,
-    enableRightIcon: true,
+    enableRightIcon: false,
     rightIconName: "phone",
     headerColor: "#323298",
     androidStatusBarColor: "#323298",
@@ -62,7 +62,7 @@ export default class ScreenHeader extends Component {
           </Left>
         )}
         <Body>
-          <Title style={{ color:'#0078ff', fontSize: 16,alignSelf:'flex-end',fontWeight: "500" }}>
+          <Title style={{ color:'#0078ff',left:this.props.left, fontSize: 16,alignSelf:'center',fontWeight: "500" }}>
             {this.props.title}
           </Title>
           {/* <Subtitle style={{ fontSize: 12, fontWeight: "400" }}>
@@ -74,34 +74,12 @@ export default class ScreenHeader extends Component {
           <Right>
             <Button
               transparent
-              onPress={() => {
-                console.log("enableRightIcon")
-                if (this.props.onRightIconPress) {
-                  console.log("enableRightIco2")
-                  this.props.onRightIconPress()
-                } else {
-                  console.log("enableRightIco3")
-                  this.makeCall("18004197717")
-                }
-              }}
-            >
-              {this.props.isRightIconText == true ? (
-                <Text
-                  style={{
-                    color: "white",
-                    fontWeight: "500",
-                    fontSize: 13
-                  }}
-                >
-                  {this.props.rightIconText}
-                </Text>
-              ) : null}
-              {this.props.isRightIconText == false ? (
+              onPress={()=> this.props.navigation.navigate('InfoPage')}>
                 <Icon
-                  name={this.props.rightIconName}
+                  name={'information'}
+                  style={{color:'black' , fontSize:30}}
                   type="MaterialCommunityIcons"
                 />
-              ) : null}
             </Button>
           </Right>
         )}

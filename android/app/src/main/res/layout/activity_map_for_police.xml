@@ -1,0 +1,226 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+
+    <!-- Map Fragment embedded with the map object -->
+    <fragment
+        android:id="@+id/mapfragmentPolice"
+        class="com.here.android.mpa.mapping.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </fragment>
+
+
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:layout_alignParentTop="true"
+        android:background="#FFFFFF"
+        >
+
+        <LinearLayout
+            android:id="@+id/linear2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Red Marker : Murder"
+                android:visibility="visible"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#f05959"
+                android:shadowRadius="2"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:paddingLeft="30sp"
+                android:paddingTop="16sp"
+                tools:context=".MainActivity" />
+
+            <TextView
+                android:id="@+id/title1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Blue Marker :  Rape"
+                android:visibility="visible"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#0065ff"
+                android:shadowRadius="2"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:paddingLeft="24sp"
+                android:paddingTop="16sp"
+                tools:context=".MainActivity" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            >
+
+            <TextView
+                android:id="@+id/title3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Green Marker : Theft"
+                android:visibility="visible"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#549805"
+                android:shadowRadius="2"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:paddingLeft="30sp"
+                android:paddingBottom="16sp"
+                tools:context=".MainActivity" />
+
+            <TextView
+                android:id="@+id/title4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Black Marker : Others"
+                android:visibility="visible"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#2a2a2a"
+                android:shadowRadius="2"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:paddingLeft="24sp"
+                android:paddingBottom="16sp"
+                tools:context=".MainActivity" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/linearb1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:background="#FFFFFF"
+        android:layout_alignParentBottom="true"
+        >
+
+        <LinearLayout
+            android:id="@+id/linearb2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/titleb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Red Marker"
+                android:visibility="visible"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#212121"
+                android:shadowRadius="2"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:paddingLeft="30sp"
+                android:paddingTop="16sp"
+                tools:context=".MainActivity" />
+
+            <TextView
+                android:id="@+id/title1b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Heavy Traffic"
+                android:visibility="visible"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#212121"
+                android:shadowRadius="2"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:paddingLeft="24sp"
+                android:paddingTop="16sp"
+                tools:context=".MainActivity" />
+
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_cancel_black_24dp"
+                android:layout_gravity="right"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear3b"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:layout_gravity="bottom"
+            android:gravity="bottom">
+
+            <TextView
+                android:id="@+id/title3b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Blue Marker"
+                android:visibility="visible"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#212121"
+                android:shadowRadius="2"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:paddingLeft="30sp"
+                android:paddingBottom="16sp"
+                tools:context=".MainActivity" />
+
+            <TextView
+                android:id="@+id/title4b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Lesser Traffic"
+                android:visibility="visible"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#212121"
+                android:shadowRadius="2"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:paddingLeft="24sp"
+                android:paddingBottom="16sp"
+                tools:context=".MainActivity" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
